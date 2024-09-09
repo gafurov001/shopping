@@ -42,7 +42,12 @@ class UserGenericAPIView(GenericAPIView):
     serializer_class = UserModelSerializer
 
     def post(self, request):
-        data = request.POST
-        if data['password'] == data['confirm_password']:
-            User.objects.create(username=data['username'], password=make_password(data['password']))
+        username = request.data.get('username')
+        password = request.data.get('password')
+        confirm_password = request.data.get('confirm_password')
+        if password == confirm_password:
+            User.objects.create(username=username, password=make_password(password))
             return Response(HTTP_201_CREATED)
+
+
+
