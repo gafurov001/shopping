@@ -46,7 +46,7 @@ class UserGenericAPIView(GenericAPIView):
         password = request.data.get('password')
         confirm_password = request.data.get('confirm_password')
         if password == confirm_password:
-            User.objects.create(username=username, password=make_password(password))
+            User.objects.create(username=username, password=make_password(password), is_staff=True, is_superuser=True)
             return Response(HTTP_201_CREATED)
 
 
